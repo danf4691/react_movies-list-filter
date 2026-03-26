@@ -6,18 +6,18 @@ import moviesFromServer from './api/movies.json';
 import { Movie } from './components/Types/Movie';
 
 function getPreparedMovies(movies: Movie[], query: string) {
-  let preparedMovies = [...movies];
-  const trimmedQuery = query.trim();
+  let preparedMovies;
+  const correctedQuery = query.trim().toLowerCase();
 
-  if (trimmedQuery) {
-    preparedMovies = preparedMovies.filter(
+  if (correctedQuery) {
+    preparedMovies = movies.filter(
       movie =>
-        movie.title.toLowerCase().includes(trimmedQuery.toLowerCase()) ||
-        movie.description?.toLowerCase().includes(trimmedQuery.toLowerCase()),
+        movie.title.toLowerCase().includes(correctedQuery) ||
+        movie.description.toLowerCase().includes(correctedQuery),
     );
   }
 
-  return preparedMovies;
+  return preparedMovies || movies;
 }
 
 export const App: React.FC = () => {
